@@ -3,8 +3,20 @@ version: 2.1
 orbs:
   browser-tools: circleci/browser-tools@1.4.6
   ruby: circleci/ruby@2.1.1
+  node: circleci/node@5.2.0
 
 commands:
+  yarn-install:
+    steps:
+      - node/install:
+          install-yarn: true
+          node-version: 18.18.2
+          yarn-version: 1.22.15
+      - node/install-packages:
+          pkg-manager: yarn
+          include-branch-in-cache-key: false
+          cache-version: v7
+
   install-browser-tools:
     steps:
       # TODO: chromedriverのinstallに失敗していたためバージョンを指定しているが解消されたらバージョン指定を削除する
@@ -13,6 +25,11 @@ commands:
           chrome-version: 116.0.5845.96
           replace-existing: true
       - browser-tools/install-chromedriver
+      - run:
+          name: Install Playwright Dependencies
+          command: |
+            yarn run playwright install-deps chrome
+            yarn run playwright install ffmpeg
   
   bundle-install:
     steps:
@@ -21,6 +38,7 @@ commands:
           with-cache: true
           clean-bundle: true
           include-branch-in-cache-key: false
+
 jobs:
   rspec:
     docker:
@@ -36,6 +54,8 @@ jobs:
           keys:
             - dependencies-{{ checksum "Gemfile.lock" }}
       - bundle-install
+      - yarn-install
+      - install-browser-tools
       - run:
           name: run rspec
           command: bundle exec rspec
