@@ -1,0 +1,14 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Weight histroys</h1>
+
+<div id="weight_histroys">
+  <% @weight_histroys.each do |weight_histroy| %>
+    <%= render weight_histroy %>
+    <p>
+      <%= link_to "Show this weight histroy", weight_histroy %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New weight histroy", new_weight_histroy_path %>
