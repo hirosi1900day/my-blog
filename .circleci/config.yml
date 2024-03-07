@@ -1,0 +1,40 @@
+version: 2.1
+
+orbs:
+  browser-tools: circleci/browser-tools@1.4.6
+
+commands:
+  install-browser-tools:
+    steps:
+      # TODO: chromedriverのinstallに失敗していたためバージョンを指定しているが解消されたらバージョン指定を削除する
+      #       ref: https://github.com/CircleCI-Public/browser-tools-orb/issues/108
+      - browser-tools/install-chrome:
+          chrome-version: 116.0.5845.96
+          replace-existing: true
+      - browser-tools/install-chromedriver
+  
+  bundle-install:
+    steps:
+      - ruby/install-deps:
+          key: gems-v1
+          with-cache: true
+          clean-bundle: true
+          include-branch-in-cache-key: false
+jobs:
+  rspec:
+    docker:
+      - image: cimg/ruby:3.2.2
+    steps:
+      - run:
+          name: apt install
+          command: |
+            sudo apt update
+            sudo apt install libmcrypt-dev libmysqlclient-dev libjemalloc-dev libjemalloc2 gnupg
+      - checkout
+      - restore_cache:
+          keys:
+            - dependencies-{{ checksum "Gemfile.lock" }}
+      - bundle-install
+      - run:
+          name: run rspec
+          command: bundle exec rspec
