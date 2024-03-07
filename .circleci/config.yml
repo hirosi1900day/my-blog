@@ -38,3 +38,12 @@ jobs:
       - run:
           name: run rspec
           command: bundle exec rspec
+
+workflows:
+  build_and_analyze:
+    jobs:
+      - rspec:
+          filters:
+            branches:
+              only:
+                - main
