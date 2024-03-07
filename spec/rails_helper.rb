@@ -29,6 +29,16 @@ begin
 rescue ActiveRecord::PendingMigrationError => e
   abort e.to_s.strip
 end
+
+Capybara.register_driver(:playwright) do |app|
+  channel = ENV['PLAYWRIGHT_CHROMIUM_CHANNEL'] || 'chromium'
+  Capybara::Playwright::Driver.new(app, channel:, viewport: { width: 1400, height: 1400 }, acceptDownloads: true, headless: true, callback_on_save_trace: true)
+end
+Capybara.default_max_wait_time = 15
+Capybara.default_driver = :playwright
+Capybara.javascript_driver = :playwright
+Capybara.save_path = 'tmp/downloads'
+
 RSpec.configure do |config|
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = Rails.root.join('spec/fixtures')
@@ -60,4 +70,11 @@ RSpec.configure do |config|
   config.filter_rails_from_backtrace!
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
+
+  config.include FactoryBot::Syntax::Methods
+
+  config.before(:each, type: :system) do
+    driven_by(:playwright)
+    # driven_by :selenium_chrome_headless
+  end
 end
