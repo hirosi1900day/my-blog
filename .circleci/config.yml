@@ -63,11 +63,12 @@ jobs:
             sudo apt update
             sudo apt install libmcrypt-dev libmysqlclient-dev libjemalloc-dev libjemalloc2 gnupg
       - checkout
+      - attach_workspace:
+          at: .
       - restore_cache:
           keys:
             - dependencies-{{ checksum "Gemfile.lock" }}
       - bundle-install
-      - yarn-install
       - install-browser-tools
       - run:
           name: run rspec
