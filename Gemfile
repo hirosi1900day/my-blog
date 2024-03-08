@@ -77,5 +77,6 @@ group :test do
   gem 'capybara-playwright-driver'
   gem 'playwright-ruby-client'
   gem 'factory_bot_rails'
+  gem 'capybara-screenshot'
   # gem 'webdrivers'
 end

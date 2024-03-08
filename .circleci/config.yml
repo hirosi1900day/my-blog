@@ -93,6 +93,8 @@ jobs:
           path: /tmp/results
       - store_artifacts:
           path: /tmp/rspec_files_list.txt
+      - store_artifacts:
+          path: /tmp/downloads
   
   assets:
     executor: default

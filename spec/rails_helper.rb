@@ -5,6 +5,7 @@ require_relative '../config/environment'
 # Prevent database truncation if the environment is production
 abort("The Rails environment is running in production mode!") if Rails.env.production?
 require 'rspec/rails'
+require 'capybara-screenshot/rspec'
 # Add additional requires below this line. Rails is not loaded until this point!
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
@@ -38,6 +39,10 @@ Capybara.default_max_wait_time = 15
 Capybara.default_driver = :playwright
 Capybara.javascript_driver = :playwright
 Capybara.save_path = 'tmp/downloads'
+
+Capybara::Screenshot.register_driver(:playwright) do |driver, path|
+  driver.browser.save_screenshot(path)
+end
 
 RSpec.configure do |config|
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
