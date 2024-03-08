@@ -72,6 +72,7 @@ jobs:
               --split-by=timings
             # NOTE: circleci tests runコマンドを利用すると、実行結果が出力されるようになっため、
             #       `/tmp/rspec-examples.txt`に出力されたファイル名を抽出する。
+            echo '通ってる前'
             if [ -e ./tmp/rspec-examples.txt]
             then
               echo '通ってる'
