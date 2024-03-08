@@ -4,7 +4,6 @@ orbs:
   browser-tools: circleci/browser-tools@1.4.6
   ruby: circleci/ruby@2.1.1
   node: circleci/node@5.2.0
-  git-shallow-clone: guitarrapc/git-shallow-clone@2.8.0
 
 commands:
   yarn-install:
@@ -50,7 +49,7 @@ jobs:
           command: |
             sudo apt update
             sudo apt install libmcrypt-dev libmysqlclient-dev libjemalloc-dev libjemalloc2 gnupg
-      - git-shallow-clone/checkout
+      - checkout
       - restore_cache:
           keys:
             - dependencies-{{ checksum "Gemfile.lock" }}
