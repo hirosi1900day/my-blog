@@ -76,7 +76,7 @@ jobs:
           command: |
             TEST_FILES=$(circleci tests glob "spec/**/*_spec.rb")
             echo "$TEST_FILES" | circleci tests run --command="xargs bundle exec rspec \
-              --failure-exit-code=0  \
+              --failure-exit-code=1  \
               --error-exit-code=1 \
               -r rspec_junit_formatter \
               -f RspecJunitFormatter \
