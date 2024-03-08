@@ -79,7 +79,7 @@ jobs:
               grep -o '[^ ]*_spec.rb[^ ]*' ./tmp/rspec-examples.txt | cut -d'[' -f1 | awk '!a[$0]++{print}' > /tmp/rspec_files_list.txt
             fi
       - store_test_results:
-          path: /tmp/results
+          path: ${TESTRESULTS_DIR}
       - store_artifacts:
           path: /tmp/rspec_files_list.txt
 
