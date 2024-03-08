@@ -67,6 +67,7 @@ jobs:
           keys:
             - dependencies-{{ checksum "Gemfile.lock" }}
       - bundle-install
+      - yarn-install
       - install-browser-tools
       - run:
           name: run rspec
