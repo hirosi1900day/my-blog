@@ -5,6 +5,17 @@ orbs:
   ruby: circleci/ruby@2.1.1
   node: circleci/node@5.2.0
 
+primary: &primary
+  image: cimg/ruby:3.1.4-browsers
+  environment:
+    ARTIFACTS_DIR: /tmp/artifacts
+    TESTRESULTS_DIR: /tmp/results
+
+executors:
+  default:
+    docker:
+      - <<: *primary
+
 commands:
   yarn-install:
     steps:
@@ -56,7 +67,6 @@ jobs:
           keys:
             - dependencies-{{ checksum "Gemfile.lock" }}
       - bundle-install
-      - yarn-install
       - install-browser-tools
       - run:
           name: run rspec
@@ -80,11 +90,22 @@ jobs:
           path: /tmp/results
       - store_artifacts:
           path: /tmp/rspec_files_list.txt
+  
+  assets:
+    executor: default
+    steps:
+      - yarn-install
+      - persist_to_workspace:
+          root: .
+          paths:
+            - "./node_modules"
 
 workflows:
   build_and_analyze:
     jobs:
       - rspec:
+          requires:
+            - assets
           filters:
             branches:
               only:
