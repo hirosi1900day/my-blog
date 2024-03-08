@@ -36,11 +36,11 @@ commands:
           chrome-version: 116.0.5845.96
           replace-existing: true
       - browser-tools/install-chromedriver
-      - run:
-          name: Install Playwright Dependencies
-          command: |
-            yarn run playwright install-deps chrome
-            yarn run playwright install ffmpeg
+      # - run:
+      #     name: Install Playwright Dependencies
+      #     command: |
+      #       yarn run playwright install-deps chrome
+      #       yarn run playwright install ffmpeg
   
   bundle-install:
     steps:
@@ -96,6 +96,9 @@ jobs:
     steps:
       - checkout
       - yarn-install
+      - run: |
+          yarn run playwright install-deps chrome
+          yarn run playwright install ffmpeg
       - persist_to_workspace:
           root: .
           paths:
