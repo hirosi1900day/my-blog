@@ -74,6 +74,7 @@ jobs:
             #       `/tmp/rspec-examples.txt`に出力されたファイル名を抽出する。
             if [ -e ./tmp/rspec-examples.txt]
             then
+              echo '通ってる'
               grep -o '[^ ]*_spec.rb[^ ]*' ./tmp/rspec-examples.txt | cut -d'[' -f1 | awk '!a[$0]++{print}' > /tmp/rspec_files_list.txt
             fi
       - store_test_results:
