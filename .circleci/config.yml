@@ -94,6 +94,7 @@ jobs:
   assets:
     executor: default
     steps:
+      - checkout
       - yarn-install
       - persist_to_workspace:
           root: .
