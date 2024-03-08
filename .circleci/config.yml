@@ -43,6 +43,8 @@ jobs:
   rspec:
     docker:
       - image: cimg/ruby:3.2.2
+    environment:
+      TESTRESULTS_DIR: /tmp/results
     steps:
       - run:
           name: apt install
@@ -58,7 +60,26 @@ jobs:
       - install-browser-tools
       - run:
           name: run rspec
-          command: bundle exec rspec
+          command: |
+            TEST_FILES=$(circleci tests glob "spec/**/*_spec.rb")
+            echo "$TEST_FILES" | circleci tests run --command="xargs bundle exec rspec \
+              --failure-exit-code=0  \
+              --error-exit-code=1 \
+              -r rspec_junit_formatter \
+              -f RspecJunitFormatter \
+              -o ${TESTRESULTS_DIR}/rspec.xml \
+              -f progress" \
+              --split-by=timings
+            # NOTE: circleci tests runコマンドを利用すると、実行結果が出力されるようになっため、
+            #       `/tmp/rspec-examples.txt`に出力されたファイル名を抽出する。
+            if [ -e ./tmp/rspec-examples.txt]
+            then
+              grep -o '[^ ]*_spec.rb[^ ]*' ./tmp/rspec-examples.txt | cut -d'[' -f1 | awk '!a[$0]++{print}' > /tmp/rspec_files_list.txt
+            fi
+      - store_test_results:
+          path: /tmp/results
+      - store_artifacts:
+          path: /tmp/rspec_files_list.txt
 
 workflows:
   build_and_analyze:
