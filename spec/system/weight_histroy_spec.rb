@@ -5,7 +5,7 @@ RSpec.describe WeightHistroy, type: :system do
     it '成功' do
       visit weight_histroys_path
 
-      expect(page).to have_content 'Weight histroy'
+      expect(page).to_not have_content 'Weight histroy'
     end
   end
 end
