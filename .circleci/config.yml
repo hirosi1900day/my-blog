@@ -94,7 +94,7 @@ jobs:
       - store_artifacts:
           path: /tmp/rspec_files_list.txt
       - store_artifacts:
-          path: /tmp/downloads
+          path: .capybara
   
   assets:
     executor: default

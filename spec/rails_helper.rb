@@ -39,6 +39,7 @@ Capybara.default_max_wait_time = 15
 Capybara.default_driver = :playwright
 Capybara.javascript_driver = :playwright
 Capybara.save_path = 'tmp/downloads'
+Capybara.save_path = Rails.root.join ".capybara"
 
 Capybara::Screenshot.register_driver(:playwright) do |driver, path|
   driver.browser.save_screenshot(path)
