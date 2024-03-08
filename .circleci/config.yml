@@ -99,9 +99,9 @@ jobs:
     steps:
       - checkout
       - yarn-install
-      - run: |
-          yarn run playwright install-deps chrome
-          yarn run playwright install ffmpeg
+      # - run: |
+      #     yarn run playwright install-deps chrome
+      #     yarn run playwright install ffmpeg
       - persist_to_workspace:
           root: .
           paths:
