@@ -46,7 +46,7 @@ commands:
   bundle-install:
     steps:
       - ruby/install-deps:
-          key: gems-v1
+          key: gems-v2
           with-cache: true
           clean-bundle: true
           include-branch-in-cache-key: false
