@@ -46,7 +46,7 @@ commands:
   bundle-install:
     steps:
       - ruby/install-deps:
-          key: gems-v2
+          key: gems-v3
           with-cache: true
           clean-bundle: true
           include-branch-in-cache-key: false
@@ -66,7 +66,7 @@ jobs:
       - checkout
       - yarn-install
       - attach_workspace:
-          at: ~/workspace
+          at: .
       - install-browser-tools
       - run:
           name: run rspec
