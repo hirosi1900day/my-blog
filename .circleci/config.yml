@@ -6,7 +6,7 @@ orbs:
   node: circleci/node@5.2.0
 
 primary: &primary
-  image: cimg/ruby:3.1.4-browsers
+  image: cimg/ruby:3.2.2
   environment:
     ARTIFACTS_DIR: /tmp/artifacts
     TESTRESULTS_DIR: /tmp/results
@@ -52,8 +52,7 @@ commands:
 
 jobs:
   rspec:
-    docker:
-      - image: cimg/ruby:3.2.2
+    executor: default
     environment:
       TESTRESULTS_DIR: /tmp/results
     resource_class: small
