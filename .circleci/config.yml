@@ -10,6 +10,7 @@ primary: &primary
   environment:
     ARTIFACTS_DIR: /tmp/artifacts
     TESTRESULTS_DIR: /tmp/results
+    BUNDLE_PATH: vendor/bundle
 
 executors:
   default:
