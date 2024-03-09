@@ -84,13 +84,8 @@ jobs:
               -o ${TESTRESULTS_DIR}/rspec.xml \
               -f progress" \
               --split-by=timings
-            # NOTE: circleci tests runコマンドを利用すると、実行結果が出力されるようになっため、
-            #       `/tmp/rspec-examples.txt`に出力されたファイル名を抽出する。
-            grep -o '[^ ]*_spec.rb[^ ]*' ./tmp/rspec-examples.txt | cut -d'[' -f1 | awk '!a[$0]++{print}' > /tmp/rspec_files_list.txt
       - store_test_results:
           path: /tmp/results
-      - store_artifacts:
-          path: /tmp/rspec_files_list.txt
       - store_artifacts:
           path: .capybara
   
