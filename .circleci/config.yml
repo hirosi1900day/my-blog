@@ -65,7 +65,7 @@ jobs:
       - checkout
       - yarn-install
       - attach_workspace:
-          at: .
+          at: ~/workspace
       - install-browser-tools
       - run:
           name: run rspec
