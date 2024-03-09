@@ -26,7 +26,7 @@ commands:
       - node/install-packages:
           pkg-manager: yarn
           include-branch-in-cache-key: false
-          cache-version: v7
+          cache-version: v1
 
   install-browser-tools:
     steps:
@@ -67,10 +67,6 @@ jobs:
       - yarn-install
       - attach_workspace:
           at: .
-      - restore_cache:
-          keys:
-            - dependencies-{{ checksum "Gemfile.lock" }}
-      - bundle-install
       - install-browser-tools
       - run:
           name: run rspec
@@ -89,12 +85,13 @@ jobs:
       - store_artifacts:
           path: .capybara
   
-  assets:
+  prepare:
     executor: default
     resource_class: small
     steps:
       - checkout
       - yarn-install
+      - bundle-install
       # - run: |
       #     yarn run playwright install-deps chrome
       #     yarn run playwright install ffmpeg
@@ -102,14 +99,15 @@ jobs:
           root: .
           paths:
             - node_modules
+            - vendor/bundle
 
 workflows:
   build_and_analyze:
     jobs:
-      - assets
+      - prepare
       - rspec:
           requires:
-            - assets
+            - prepare
           filters:
             branches:
               only:
