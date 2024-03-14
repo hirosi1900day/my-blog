@@ -12,11 +12,10 @@
 
 ActiveRecord::Schema[7.0].define(version: 2024_03_07_003106) do
   create_table "weight_histroys", force: :cascade do |t|
-    t.integer "user_id", null: false
     t.integer "weight"
     t.string "memo"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_weight_histroys_on_user_id"
   end
+
 end
