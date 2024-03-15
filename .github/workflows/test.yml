@@ -2,6 +2,8 @@ name: test_fluentbit
 
 on:
   push:
+    branches:
+      - flentbit-test
 
 jobs:
   test_fluentbit:
