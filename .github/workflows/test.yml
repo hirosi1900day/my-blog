@@ -26,7 +26,7 @@ jobs:
       - name: Build a Docker image for testing
         uses: docker/build-push-action@v3
         with:
-          context: ./
+          context: ./fluentbit
           builder: ${{ steps.buildx.outputs.name }}
           push: false
           cache-from: type=local,src=/tmp/.buildx-cache
