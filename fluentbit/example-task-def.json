@@ -1,0 +1,134 @@
+{
+    "taskDefinitionArn": "arn:aws:ecs:ap-northeast-1:572919087216:task-definition/flentbit-rails-test-with-flentbit:2",
+    "containerDefinitions": [
+        {
+            "name": "rails",
+            "image": "572919087216.dkr.ecr.ap-northeast-1.amazonaws.com/flent-bit-test-rails:latest",
+            "cpu": 0,
+            "portMappings": [
+                {
+                    "name": "rails-3000-tcp",
+                    "containerPort": 3000,
+                    "hostPort": 3000,
+                    "protocol": "tcp",
+                    "appProtocol": "http"
+                }
+            ],
+            "essential": true,
+            "environment": [],
+            "mountPoints": [],
+            "volumesFrom": [],
+            "logConfiguration": {
+                "logDriver": "awsfirelens",
+                "options": {}
+            },
+            "systemControls": []
+        },
+        {
+            "name": "log_router",
+            "image": "572919087216.dkr.ecr.ap-northeast-1.amazonaws.com/flent-bit-test-bit:latest",
+            "cpu": 0,
+            "memoryReservation": 50,
+            "portMappings": [],
+            "essential": true,
+            "environment": [
+                {
+                    "name": "LOG_STREAM_NAME",
+                    "value": "rails/rails/$(ecs_task_id)"
+                },
+                {
+                    "name": "LOG_GROUP_NAME",
+                    "value": "stg-mext/ecs/app"
+                }
+            ],
+            "mountPoints": [],
+            "volumesFrom": [],
+            "user": "0",
+            "logConfiguration": {
+                "logDriver": "awslogs",
+                "options": {
+                    "awslogs-create-group": "true",
+                    "awslogs-group": "/ecs/flentbit-rails-test-with-flentbit",
+                    "awslogs-region": "ap-northeast-1",
+                    "awslogs-stream-prefix": "ecs"
+                }
+            },
+            "systemControls": [],
+            "firelensConfiguration": {
+                "type": "fluentbit",
+                "options": {
+                    "config-file-type": "file",
+                    "config-file-value": "/fluent-bit/etc/extra.conf"
+                }
+            }
+        }
+    ],
+    "family": "flentbit-rails-test-with-flentbit",
+    "taskRoleArn": "arn:aws:iam::572919087216:role/AmazonECSTaskExecutionRole",
+    "executionRoleArn": "arn:aws:iam::572919087216:role/AmazonECSTaskExecutionRole",
+    "networkMode": "awsvpc",
+    "revision": 2,
+    "volumes": [],
+    "status": "ACTIVE",
+    "requiresAttributes": [
+        {
+            "name": "ecs.capability.execution-role-awslogs"
+        },
+        {
+            "name": "com.amazonaws.ecs.capability.ecr-auth"
+        },
+        {
+            "name": "ecs.capability.firelens.options.config.file"
+        },
+        {
+            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.17"
+        },
+        {
+            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.21"
+        },
+        {
+            "name": "com.amazonaws.ecs.capability.logging-driver.awsfirelens"
+        },
+        {
+            "name": "com.amazonaws.ecs.capability.task-iam-role"
+        },
+        {
+            "name": "ecs.capability.execution-role-ecr-pull"
+        },
+        {
+            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.18"
+        },
+        {
+            "name": "ecs.capability.task-eni"
+        },
+        {
+            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.29"
+        },
+        {
+            "name": "com.amazonaws.ecs.capability.logging-driver.awslogs"
+        },
+        {
+            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.19"
+        },
+        {
+            "name": "ecs.capability.firelens.fluentbit"
+        }
+    ],
+    "placementConstraints": [],
+    "compatibilities": [
+        "EC2",
+        "FARGATE"
+    ],
+    "requiresCompatibilities": [
+        "FARGATE"
+    ],
+    "cpu": "1024",
+    "memory": "3072",
+    "runtimePlatform": {
+        "cpuArchitecture": "X86_64",
+        "operatingSystemFamily": "LINUX"
+    },
+    "registeredAt": "2024-03-15T02:56:11.922Z",
+    "registeredBy": "arn:aws:iam::572919087216:root",
+    "tags": []
+}
