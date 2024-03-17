@@ -96,6 +96,14 @@ GEM
       irb (~> 1.10)
       reline (>= 0.3.8)
     diff-lcs (1.5.1)
+    elastic-transport (8.3.2)
+      faraday (< 3)
+      multi_json
+    elasticsearch (8.12.2)
+      elastic-transport (~> 8.3)
+      elasticsearch-api (= 8.12.2)
+    elasticsearch-api (8.12.2)
+      multi_json
     erubi (1.12.0)
     factory_bot (6.2.1)
       activesupport (>= 5.0.0)
@@ -104,8 +112,13 @@ GEM
       railties (>= 5.0.0)
     faker (3.2.3)
       i18n (>= 1.8.11, < 2)
+    faraday (2.9.0)
+      faraday-net_http (>= 2.0, < 3.2)
+    faraday-net_http (3.1.0)
+      net-http
     globalid (1.2.1)
       activesupport (>= 6.1)
+    hashie (5.0.0)
     i18n (1.14.4)
       concurrent-ruby (~> 1.0)
     importmap-rails (2.0.1)
@@ -144,6 +157,9 @@ GEM
     mini_mime (1.1.5)
     minitest (5.22.2)
     msgpack (1.7.2)
+    multi_json (1.15.0)
+    net-http (0.4.1)
+      uri
     net-imap (0.4.10)
       date
       net-protocol
@@ -160,6 +176,9 @@ GEM
       racc (~> 1.4)
     nokogiri (1.16.2-x86_64-linux)
       racc (~> 1.4)
+    opensearch-ruby (3.1.0)
+      faraday (>= 1.0, < 3)
+      multi_json (>= 1.0)
     pg (1.5.6)
     playwright-ruby-client (1.42.1)
       concurrent-ruby (>= 1.1.6)
@@ -230,6 +249,9 @@ GEM
     rspec_junit_formatter (0.6.0)
       rspec-core (>= 2, < 4, != 2.12.0)
     rubyzip (2.3.2)
+    searchkick (5.3.1)
+      activemodel (>= 6.1)
+      hashie
     selenium-webdriver (4.10.0)
       rexml (~> 3.2, >= 3.2.5)
       rubyzip (>= 1.2.2, < 3.0)
@@ -255,6 +277,7 @@ GEM
       railties (>= 6.0.0)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
+    uri (0.13.0)
     web-console (4.2.1)
       actionview (>= 6.0.0)
       activemodel (>= 6.0.0)
@@ -279,17 +302,20 @@ DEPENDENCIES
   capybara-playwright-driver
   capybara-screenshot
   debug
+  elasticsearch
   factory_bot_rails
   faker
   importmap-rails
   jbuilder
   lograge
+  opensearch-ruby
   pg
   playwright-ruby-client
   puma (~> 5.0)
   rails (~> 7.0.4, >= 7.0.4.3)
   rspec-rails
   rspec_junit_formatter
+  searchkick
   selenium-webdriver
   sprockets-rails
   sqlite3 (~> 1.4)

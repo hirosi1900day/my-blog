@@ -7,8 +7,52 @@ services:
       - .:/myapp
     environment:
       TZ: Asia/Tokyo
+      ELASTICSEARCH_URL: "http://elasticsearch:9200"
     ports:
       - "3000:3000"
     tty:
       true
     stdin_open: true
+
+  elasticsearch:
+    image: elasticsearch:8.8.1
+    volumes:
+      - elasticsearch2:/usr/share/elasticsearch/data
+    environment:
+      http.host: "0.0.0.0"
+      http.port: "9200"
+      discovery.type: "single-node"
+      ES_JAVA_OPTS: '-Xms256m -Xmx256m'
+      xpack.security.enabled: 'false'
+    entrypoint: >
+      bash -c "(elasticsearch-plugin install analysis-kuromoji || true) &&
+      (elasticsearch-plugin install analysis-icu || true) &&
+      docker-entrypoint.sh"
+    ports:
+      - "9200:9200"
+    expose: ["9200"]
+  
+volumes:
+  elasticsearch2:
+
+
+  # opensearch:
+  #   image: opensearchproject/opensearch:1.3.6
+  #   container_name: opensearch
+  #   environment:
+  #     - cluster.name=opensearch-cluster
+  #     - node.name=opensearch-node1
+  #     - discovery.type=single-node
+  #     - bootstrap.memory_lock=true
+  #     - "OPENSEARCH_JAVA_OPTS=-Xms512m -Xmx512m"
+  #     - "DISABLE_INSTALL_DEMO_CONFIG=true"
+  #     - "DISABLE_SECURITY_PLUGIN=true"
+  #   ulimits:
+  #     memlock:
+  #       soft: -1
+  #       hard: -1
+  #   volumes:
+  #     - ./tmp/opensearch_data:/usr/share/opensearch/data
+  #   ports:
+  #     - 9200:9200
+  #     - 9600:9600

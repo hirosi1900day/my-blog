@@ -31,6 +31,11 @@ gem "jbuilder"
 
 gem 'lograge'
 
+
+gem "searchkick"
+gem "elasticsearch" 
+# gem "opensearch-ruby"
+
 # Use Redis adapter to run Action Cable in production
 # gem "redis", "~> 4.0"
 
