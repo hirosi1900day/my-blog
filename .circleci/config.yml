@@ -56,6 +56,7 @@ jobs:
     executor: default
     environment:
       TESTRESULTS_DIR: /tmp/results
+      PLAYWRIGHT_CHROMIUM_CHANNEL: "chrome"
     resource_class: small
     steps:
       - run:
