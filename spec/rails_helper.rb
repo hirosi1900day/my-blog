@@ -82,5 +82,14 @@ RSpec.configure do |config|
   config.before(:each, type: :system) do
     driven_by(:playwright)
     # driven_by :selenium_chrome_headless
+    
+  end
+
+  config.after(:each, type: :system) do
+    driven_by(:playwright)
+    # driven_by :selenium_chrome_headless
+    base_path = Rails.root.join("spec/screenshots/compare")
+    path = "test#{Time.current}.png"
+    page.save_screenshot(base_path.join(path))
   end
 end
