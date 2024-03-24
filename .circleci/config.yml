@@ -106,10 +106,13 @@ workflows:
   build_and_analyze:
     jobs:
       - prepare
-      - rspec:
+      - approval-deploy:
           type: approval
           requires:
             - prepare
+      - rspec:
+          requires:
+            - approval-deploy
           filters:
             branches:
               only:
